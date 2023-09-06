@@ -49,7 +49,7 @@ Rails.application.configure do
     address: 'smtp.gmail.com',
     port: 587,
     user_name: 'schopz.social@gmail.com',
-    password: '',
+    password: PASSWD,
     authentication: 'plain',
     enable_starttls_auto: true
   }
