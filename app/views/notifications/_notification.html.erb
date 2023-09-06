@@ -1,0 +1,38 @@
+<li id=<%= "#{notification.notifiable_type.downcase}#{notification.sender.id}"%> class="bg-white shadow-md dark:bg-dm-2 dark:shadow-none rounded-[6px] duration-500 my-3 py-3 px-4 border border-gray-100 dark:border-gray-700" >
+  <div class='flex justify-between items-center mb-2'>
+    <p class="text-xs text-gray-800 dark:text-gray-200 justify-self-end"><%= time_ago_in_words(notification.created_at) %> ago</p>
+
+    <ion-icon class=<%= "#{notification_icon(notification)[notification.notifiable_type.to_sym][:class]}"%>
+              name=<%= "#{notification_icon(notification)[notification.notifiable_type.to_sym][:icon]}"%>>
+    </ion-icon>
+  </div>
+
+  <div class='flex flex-col md:flex-row md:items-center justify-between'>
+    <div class='flex items-center'>
+      <img src=<%= profile_img(notification.sender) %> class="rounded-full w-14 h-14 mr-3">
+
+      <div>
+        <span class="font-bold"><%= link_to notification.sender.username, notification.sender %></span>
+        
+        <span id=<%= "#{notification.notifiable_type.downcase}-message#{notification.sender.id}" %> >
+          <%= notification.message %>
+        </span>
+      </div>
+    </div>
+
+    <% if notification.friend_request? %>
+      <div class="self-end md:self-center mb-1 md:mb-0">
+        <%= render 'friend_form',  :@user => notification.sender %>
+      </div>
+    <% end %>
+  </div>
+  
+  <% unless notification.notifiable_type == 'Friendship' %>
+    <div>
+      <%= link_to post_link(notification) do %>
+        <hr class="h-[1px] border-none bg-gray-200 dark:bg-gray-800 my-[5px]">
+        <p class='text-gray-600 dark:text-gray-400 ml-[68px] break-words'><%= notification_content(notification) %></p>
+      <% end %>
+    </div>
+  <% end %>
+</li>

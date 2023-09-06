@@ -1,0 +1,3 @@
+<%= turbo_stream.update "feed#{@post.user.id}" do %>
+  <%= render @post.user.feed %>
+<% end %>

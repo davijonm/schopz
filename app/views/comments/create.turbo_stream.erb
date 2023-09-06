@@ -1,0 +1,13 @@
+<%= turbo_stream.update "comment_count#{@comment.post.id}" do %>
+  <%= pluralize(@post.comments.count, 'Comment') %>
+<% end %>
+
+<% if @comment.parent.nil? %>
+  <%= turbo_stream.append "comments#{@comment.post.id}" do %>
+    <%= render @comment %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.append "nested#{@comment.parent.id}" do %>
+    <%= render @comment %>
+  <% end %>
+<% end %>
